@@ -6,7 +6,7 @@ _delete this line, type your name here_
 
 Please fill out the following questions before class on Tuesday morning:
 
-### Which of the [final project prompts](https://pages.git.generalassemb.ly/mpaulweeks/JSD-1week/curriculum/lesson-plans/final-project-prompt/) will you be making this week?
+### Which of the [final project prompts](https://pages.git.generalassemb.ly/guardian-jsd/public/final/) will you be making this week?
 
 _delete this line, type answer here_
 
