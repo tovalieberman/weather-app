@@ -1,6 +1,6 @@
 # guardian-jsd
 
-_delete this line, type your name here_
+Tova Lieberman
 
 ## Final Project
 
