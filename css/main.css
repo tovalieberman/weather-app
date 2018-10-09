@@ -1,0 +1,18 @@
+#weather-background {
+    background-repeat: no-repeat;
+    height: 375px;
+    text-align: center;
+    background-position: center;
+}
+.sunny {
+    background-image: url(../img/sunny.jpg);
+}
+.cloudy {
+    background-image: url(../img/cloudy.jpg);
+}
+.rainy {
+    background-image: url(../img/rainy.png);
+}
+.stormy {
+    background-image: url(../img/stormy.jpg);
+}
