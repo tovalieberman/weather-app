@@ -7,14 +7,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="css/main.css" />
     <link rel="shortcut icon" href="weather-icon.png" />
-    <script src="js/main.js"></script>
+    <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script defer src="js/main.js"></script>
 </head>
 <body>
     <h1 class="title">Weather app</h1>
-    <h3>Enter city:</h3>
-    <form action="#">
-        <input type="text">
-        <input type="submit">
+    <form id="form" action="#">
+        <label for="location">Enter city:</label>
+        <input type="text" name="location" id="location">
+        <input type="submit" id="submit">
     </form>
+    <h3 class="response"></h3>
 </body>
 </html>
