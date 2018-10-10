@@ -12,28 +12,33 @@
 </head>
 <body>
     <div id="weather-background">
-        <div class="weather-text">
-            <h1 class="title">Weather app</h1>
-            <form id="form" action="#">
-                <label for="location">Enter city:</label>
-                <input type="text" name="location" id="location">
-                <input type="submit" id="submit">
-            </form>
-            <div class="response"></div>        
+        <div class="wrapper">
+            <div class="weather-text">
+                <h1 class="title">Weather app</h1>
+                <form id="form" action="#">
+                    <label for="location">Enter city:</label>
+                    <input type="text" name="location" id="location">
+                    <input type="submit" id="submit">
+                </form>
+                <div class="response"></div>        
+            </div>
+            <div class="current-weather hidden">
+                <table>
+                    <tr>
+                        <td rowspan="3" colspan="2" class="temperature">75&#176;F</td>
+                        <td>Precipitation: 10%</td>
+                    </tr>
+                    <tr>
+                        <td>Humidity: 78%</td>
+                    </tr>
+                    <tr>
+                        <td>Wind: 5mph</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="forecast hidden">
+                <h2>5 day forecast:</h2>
+            </div>        
         </div>
-        <div class="current-weather hidden">
-            <table>
-                <tr>
-                    <td rowspan="3" colspan="2" class="temperature">75&#176;F</td>
-                    <td>Precipitation: 10%</td>
-                </tr>
-                <tr>
-                    <td>Humidity: 78%</td>
-                </tr>
-                <tr>
-                    <td>Wind: 5mph</td>
-                </tr>
-            </table>
-        </div>
-</body>
+    </body>
 </html>
