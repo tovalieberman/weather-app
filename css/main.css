@@ -1,10 +1,28 @@
+/* Remove space on top of page */
+body {
+    margin: 0;
+}
+h1 {
+    margin-top: 0; 
+}
+/* Stretch background mage to full height of screen */
+html {
+    height: 100%;
+}
+body {
+    height: 100%;
+}
+/* Add images based on current weather */
 #weather-background {
     background-position: center;
     background-repeat: no-repeat;
-    min-height: 400px;
-    max-width: 600px;
-    margin: 0 auto;
+    background-size: cover;
+    height: 100%;
     text-align: center;
+}
+.weather-text {
+    margin: 0 auto;
+    max-width: 600px;
 }
 .sunny {
     background-image: url(../img/sunny.jpg);
@@ -17,4 +35,13 @@
 }
 .stormy {
     background-image: url(../img/stormy.jpg);
+}
+.clear {
+    background-image: url(../img/clear.jpg); 
+}
+.snowy {
+    background-image: url(../img/snowy.jpg); 
+}
+.foggy {
+    background-image: url(../img/foggy.png);
 }

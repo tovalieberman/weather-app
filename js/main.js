@@ -1,7 +1,7 @@
 $('#form').on('submit', function() {
     console.log('clicked submit');
     let location = $('#location').val();
-    let weatherList = ["sunny", "cloudy", "rainy", "stormy"];
+    let weatherList = ["sunny", "cloudy", "rainy", "stormy", "clear", "snowy", "foggy"];
     let weatherRand = Math.floor(Math.random() * weatherList.length);
     let weather = weatherList[weatherRand];
     let message = getCustomMessage(weather);
