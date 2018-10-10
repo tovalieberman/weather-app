@@ -2,8 +2,11 @@
 body {
     margin: 0;
 }
-h1 {
+h1.title {
     margin-top: 0; 
+    margin-bottom: 0;
+    padding-bottom: 25px;
+    padding-top: 25px;
 }
 /* Stretch background image to full height of screen */
 html {
@@ -21,6 +24,7 @@ body {
 }
 /* Add images based on current weather */
 #weather-background {
+    background-image: linear-gradient(#c1d5ea, #6d9bce); /* When the user first sees the app, before they get the weather-specific image */
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -31,26 +35,44 @@ body {
     margin: 0 auto;
     max-width: 600px;
 }
-.sunny {
+#weather-background.sunny {
     background-image: url(../img/sunny.jpg);
 }
-.cloudy {
+#weather-background.cloudy {
     background-image: url(../img/cloudy.jpg);
 }
-.rainy {
+#weather-background.rainy {
     background-image: url(../img/rainy.png);
 }
-.stormy {
+#weather-background.stormy {
     background-image: url(../img/stormy.jpg);
 }
-.clear {
+#weather-background.clear {
     background-image: url(../img/clear.jpg); 
 }
-.snowy {
+#weather-background.snowy {
     background-image: url(../img/snowy.jpg); 
 }
-.foggy {
+#weather-background.foggy {
     background-image: url(../img/foggy.png);
+}
+/* Input field and submit button */
+input#location {
+    padding: 10px;
+    color: #000;
+    font-size: 20px;
+    width: 250px;    
+}
+input#submit {
+    margin-left: 15px;
+    padding: 10px;
+    background-color: #75757b;
+    font-size: 20px;
+    font-family: inherit;
+    border-radius: 15px;
+    color: #fff;
+    border: 2px solid #ffffffc9;
+    cursor: pointer;
 }
 /* Current weather table */
 .current-weather table {
