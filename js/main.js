@@ -10,8 +10,38 @@ $('#form').on('submit', function() {
     $('#weather-background').addClass(weather.toLowerCase());
     $('.current-weather').removeClass("hidden");
     $('.forecast').removeClass("hidden");
+    callAPI();
     return false;
 });
+
+let units = "imperial"; //switch to metric for celsius
+let apiKey = "5a37ff291870ef42192074fc8420c55a";
+let query = "London,UK";
+let action = "weather"; //switch to forecast for 5-day forecast
+
+function callAPI() {
+    $.ajax({
+        type: "GET",
+        url: `https://api.openweathermap.org/data/2.5/${action}?q=${query}&appid=${apiKey}&units=${units}`,
+        success: displayOutput,
+        error: function(data, status, errorThrown) {
+          console.log('error code ' + status);
+        }
+    });
+}
+
+function displayOutput(resp) {
+    console.log(resp);
+    let nameH2 = $('<h2>').html(resp.name);
+    $('.response').append(nameH2);
+    let weatherH2 = $('<h2>').html(resp.weather[0].main);
+    $('.response').append(weatherH2);
+
+    $('#temp-value').html(Math.round(resp.main.temp));
+    $('#humidity-value').html(resp.main.humidity);
+    $('#pressure-value').html(resp.main.pressure);
+    $('#wind-speed-value').html(Math.round(resp.wind.speed));
+}
 
 function getCustomMessage(weather) {
     let message = "";
