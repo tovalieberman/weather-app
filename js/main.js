@@ -1,26 +1,13 @@
+let weatherApi = new WeatherApi(successCallback);
+
 $('#form').on('submit', function () {
     console.log('clicked submit');
-    let query = $("#location").val();
-    callAPI(query);
+    let city = $("#location").val();
+    weatherApi.currentWeatherByCity(city);
     return false;
 });
 
-let units = "imperial"; //switch to metric for celsius
-let apiKey = "5a37ff291870ef42192074fc8420c55a";
-let action = "weather"; //switch to forecast for 5-day forecast
-
-function callAPI(query) {
-    $.ajax({
-        Category: "GET",
-        url: `https://api.openweathermap.org/data/2.5/${action}?q=${query}&appid=${apiKey}&units=${units}`,
-        success: handleResponse,
-        error: function (data, status, errorThrown) {
-            console.log('error code ' + status);
-        }
-    });
-}
-
-function handleResponse(response) {
+function successCallback(response) {
     displayOutput(response);
     let weatherStatus = getWeatherStatus(response);
     updateBackgroundImage(weatherStatus);
