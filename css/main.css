@@ -72,3 +72,24 @@ body {
 .hidden {
     display: none;
 }
+/* Forecast table */
+.forecast table {
+    margin: 0 auto;
+    border-spacing: 0;
+    background-color: #638ebe7a;
+}
+.forecast table td.heading-cell {
+    background-color: #75757b96;
+}
+.forecast table td {
+    padding: 10px;
+    border: 1px solid #ffffff36;
+    border-spacing: 0;
+}
+.forecast table tr:last-child td:first-child {
+    border-bottom-left-radius: 10px;
+}
+
+.forecast table tr:last-child td:last-child {
+    border-bottom-right-radius: 10px;
+}
