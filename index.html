@@ -20,34 +20,21 @@
                     <input type="submit" id="submit" value="Search">
                 </form>
             </div>
-            <div class="response"></div>
+            <div class="response">
+                <h3 class="location"></h3>
+                <h2 class="weather"></h2>
+            </div>
             <div class="current-weather hidden">
                 <table>
                     <tr>
-                        <td rowspan="3" colspan="2" class="temperature">
-                            <span id="temp-value"></span>
-                            <span class="degree-symbol">&#176;</span>
-                            <span class="units"></span>
-                        </td>
-                        <td class="humidity">
-                            <span class="title">Humidity:</span>
-                            <span class="value" id="humidity-value"></span>
-                            <span class="percent-symbol">%</span>
-                        </td>
+                        <td rowspan="3" colspan="2" class="temperature"><span id="temp-value"></span></td>
+                        <td class="humidity">Humidity:<span id="humidity-value"></span>%</td>
                     </tr>
                     <tr>
-                        <td class="pressure">
-                            <span class="title">Air Pressure:</span>
-                            <span class="value" id="pressure-value"></span>
-                            <span class="units">psa</span>
-                        </td>        
+                        <td class="pressure">Air Pressure:<span id="pressure-value"></span>psa</td>        
                     </tr>
                     <tr>
-                        <td class="wind-speed">
-                            <span class="title">Wind:</span>
-                            <span class="value" id="wind-speed-value"></span>
-                            <span class="units">mph</span>
-                        </td>        
+                        <td class="wind-speed">Wind:<span id="wind-speed-value"></span>mph</td>        
                     </tr>
                 </table>
             </div>
