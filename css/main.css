@@ -45,3 +45,23 @@ body {
 .foggy {
     background-image: url(../img/foggy.png);
 }
+/* Current weather table */
+.current-weather table {
+    margin: 0 auto;
+    max-width: 300px;
+    max-height: 300px;
+    border-spacing: 0;
+}
+.current-weather table td {
+    width: 150px;
+    height: 30px;
+    box-sizing: border-box;
+    text-align: left;
+}
+.temperature {
+    font-size: 50px;
+}
+/* Hide weather data until after API call */
+.hidden {
+    display: none;
+}

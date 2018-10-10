@@ -1,13 +1,15 @@
 $('#form').on('submit', function() {
     console.log('clicked submit');
     let location = $('#location').val();
-    let weatherList = ["sunny", "cloudy", "rainy", "stormy", "clear", "snowy", "foggy"];
+    let weatherList = ["Sunny", "Cloudy", "Rainy", "Stormy", "Clear", "Snowy", "Foggy"];
     let weatherRand = Math.floor(Math.random() * weatherList.length);
     let weather = weatherList[weatherRand];
     let message = getCustomMessage(weather);
-    $('.response').html(`The weather in ${location} is ${weather}. ${message}`);
+    $('.response').html(`<h3 class="location">${location}</h3><h2 class="weather">${weather}</h2>`);
     $('#weather-background').removeClass();
-    $('#weather-background').addClass(weather);
+    $('#weather-background').addClass(weather.toLowerCase());
+    $('.current-weather').removeClass("hidden");
+    $('.forecast').removeClass("hidden");
     return false;
 });
 
