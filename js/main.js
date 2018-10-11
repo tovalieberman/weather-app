@@ -52,6 +52,7 @@ function displayFiveDayForecast(response) {
     $('.forecast').removeClass("hidden");
     let list = response.list;
     let flexbox;
+    let flexboxesWrapper = $('<div>');
     for(let i = 0; i < list.length; i++) {
         flexbox = $('<div>').addClass("flex-container-" + (i + 1));
         flexbox.append($('<div>').addClass("cell heading-cell").html("Time"));
@@ -68,8 +69,9 @@ function displayFiveDayForecast(response) {
         flexbox.append($('<div>').addClass("cell value-cell").html(Math.round(list[i].main.pressure) + " psa"));
         flexbox.append($('<div>').addClass("cell heading-cell").html("Wind"));
         flexbox.append($('<div>').addClass("cell value-cell").html(Math.round(list[i].wind.speed) + " mph"));
-        $('.forecast').append(flexbox);
+        flexboxesWrapper.append(flexbox);
     }
+    $('.forecast-flexbox').html(flexboxesWrapper); //Use html() instead of append() so we don't end up with multiple tables
 }
 
 function getDateString(utcTime) {
