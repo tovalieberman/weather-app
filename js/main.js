@@ -1,9 +1,12 @@
-let weatherApi = new WeatherApi(successCallback);
+let weatherApi = new WeatherApi(successCallback, failureCallback);
 
 $('#form').on('submit', function () {
     console.log('clicked submit');
     let city = $("#location").val();
-    weatherApi.currentWeatherByCity(city);
+    //Only call the API if location was given
+    if (city) {
+        weatherApi.currentWeatherByCity(city);
+    }
     return false;
 });
 
@@ -11,6 +14,11 @@ function successCallback(response) {
     displayOutput(response);
     let weatherStatus = getWeatherStatus(response);
     updateBackgroundImage(weatherStatus);
+}
+
+function failureCallback(data, status, errorThrown) {
+    console.log("error code " + status);
+    $('.location').html("Location not found, please try again.");
 }
 
 function displayOutput(resp) {
