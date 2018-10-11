@@ -5,11 +5,26 @@ $('#form').on('submit', function () {
     let city = $("#location").val();
     //Only call the API if location was given
     if (city) {
-        weatherApi.currentWeatherByCity(city, currentWeatherSuccessCallback, failureCallback);
-        weatherApi.fiveDayForecastByCity(city, forecastSuccessCallback, failureCallback);
+        getCurrentWeatherData(city);
+        getWeatherForecastData(city);
+        // callAPIwrapper(city);
+        // weatherApi.currentWeatherByCity(city, currentWeatherSuccessCallback, failureCallback);
+        // weatherApi.fiveDayForecastByCity(city, forecastSuccessCallback, failureCallback);
     }
     return false;
 });
+
+async function getCurrentWeatherData(city) {
+    let weatherData = await weatherApi.currentWeatherByCity(city);
+    console.log(weatherData);
+    currentWeatherSuccessCallback(weatherData);
+}
+
+async function getWeatherForecastData(city) {
+    let forecastData = await weatherApi.fiveDayForecastByCity(city);
+    console.log(forecastData);
+    forecastSuccessCallback(forecastData);
+}
 
 function currentWeatherSuccessCallback(response) {
     displayOutput(response);
