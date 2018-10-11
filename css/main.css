@@ -121,7 +121,7 @@ div[class^="flex-container"] .heading-cell {
 /* Responsive design: medium/large viewport */
 @media only screen and (min-width: 768px) {
     div[class^="flex-container"] {
-        max-width: 75%;
+        max-width: 88%;
     }
     div[class^="flex-container"] .cell {
         width: 10%;

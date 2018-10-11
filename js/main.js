@@ -50,9 +50,26 @@ function displayCurrentWeather(response) {
 
 function displayFiveDayForecast(response) {
     $('.forecast').removeClass("hidden");
-    response.list.forEach(function(weatherData) {
-        console.log(console.log(weatherData));
-    });
+    let list = response.list;
+    let flexbox;
+    for(let i = 0; i < list.length; i++) {
+        flexbox = $('<div>').addClass("flex-container-" + (i + 1));
+        flexbox.append($('<div>').addClass("cell heading-cell").html("Time"));
+        flexbox.append($('<div>').addClass("cell value-cell").html(list[i].dt));
+        flexbox.append($('<div>').addClass("cell heading-cell").html("Icon"));
+        flexbox.append($('<div>').addClass("cell value-cell").html(list[i].weather[0].icon));
+        flexbox.append($('<div>').addClass("cell heading-cell").html("Description"));
+        flexbox.append($('<div>').addClass("cell value-cell").html(list[i].weather[0].main));
+        flexbox.append($('<div>').addClass("cell heading-cell").html("Temperature"));
+        flexbox.append($('<div>').addClass("cell value-cell").html(Math.round(list[i].main.temp) + "&#176;"));
+        flexbox.append($('<div>').addClass("cell heading-cell").html("Humidity"));
+        flexbox.append($('<div>').addClass("cell value-cell").html(list[i].main.humidity + "%"));
+        flexbox.append($('<div>').addClass("cell heading-cell").html("Air Pressure"));
+        flexbox.append($('<div>').addClass("cell value-cell").html(Math.round(list[i].main.pressure) + " psa"));
+        flexbox.append($('<div>').addClass("cell heading-cell").html("Wind"));
+        flexbox.append($('<div>').addClass("cell value-cell").html(Math.round(list[i].wind.speed) + " mph"));
+        $('.forecast').append(flexbox);
+    }
 }
 
 function handleError(error) {
