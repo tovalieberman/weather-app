@@ -7,38 +7,50 @@ $('#form').on('submit', function () {
     if (city) {
         getCurrentWeatherData(city);
         getWeatherForecastData(city);
-        // callAPIwrapper(city);
-        // weatherApi.currentWeatherByCity(city, currentWeatherSuccessCallback, failureCallback);
-        // weatherApi.fiveDayForecastByCity(city, forecastSuccessCallback, failureCallback);
     }
     return false;
 });
 
 async function getCurrentWeatherData(city) {
-    let weatherData = await weatherApi.currentWeatherByCity(city);
-    console.log(weatherData);
-    currentWeatherSuccessCallback(weatherData);
+    try {
+        let weatherData = await weatherApi.currentWeatherByCity(city);
+        console.log(weatherData);
+        currentWeatherSuccessCallback(weatherData);    
+    }
+    catch(error) {
+        failureCallback(error);
+    }
 }
 
 async function getWeatherForecastData(city) {
-    let forecastData = await weatherApi.fiveDayForecastByCity(city);
-    console.log(forecastData);
-    forecastSuccessCallback(forecastData);
+    try {
+        let forecastData = await weatherApi.fiveDayForecastByCity(city);
+        console.log(forecastData);
+        forecastSuccessCallback(forecastData);    
+    }
+    catch(error) {
+        failureCallback(error);
+    }
 }
 
 function currentWeatherSuccessCallback(response) {
+    $('.current-weather').removeClass("hidden");
     displayOutput(response);
     let weatherStatus = getWeatherStatus(response);
     updateBackgroundImage(weatherStatus);
 }
 
 function forecastSuccessCallback(response) {
+    $('.forecast').removeClass("hidden");
     generateFiveDayForecastHTML(response);
 }
 
-function failureCallback(data, status, errorThrown) {
-    console.log("error code " + status);
+function failureCallback(error) {
+    console.log("error code " + error.message);
     $('.location').html("Location not found, please try again.");
+    $('.weather').addClass("hidden");
+    $('.current-weather').addClass("hidden");
+    $('.forecast').addClass("hidden");
 }
 
 function displayOutput(resp) {
@@ -99,8 +111,6 @@ function getWeatherStatus(response) {
 function updateBackgroundImage(weatherCategory) {
     $('#weather-background').removeClass();
     $('#weather-background').addClass(weatherCategory);
-    $('.current-weather').removeClass("hidden");
-    $('.forecast').removeClass("hidden");
 }
 
 function generateFiveDayForecastHTML(response) {
