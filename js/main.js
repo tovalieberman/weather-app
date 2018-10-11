@@ -1,19 +1,24 @@
-let weatherApi = new WeatherApi(successCallback, failureCallback);
+let weatherApi = new WeatherApi();
 
 $('#form').on('submit', function () {
     console.log('clicked submit');
     let city = $("#location").val();
     //Only call the API if location was given
     if (city) {
-        weatherApi.currentWeatherByCity(city);
+        weatherApi.currentWeatherByCity(city, currentWeatherSuccessCallback, failureCallback);
+        weatherApi.fiveDayForecastByCity(city, forecastSuccessCallback, failureCallback);
     }
     return false;
 });
 
-function successCallback(response) {
+function currentWeatherSuccessCallback(response) {
     displayOutput(response);
     let weatherStatus = getWeatherStatus(response);
     updateBackgroundImage(weatherStatus);
+}
+
+function forecastSuccessCallback(response) {
+    generateFiveDayForecastHTML(response);
 }
 
 function failureCallback(data, status, errorThrown) {
@@ -81,6 +86,12 @@ function updateBackgroundImage(weatherCategory) {
     $('#weather-background').addClass(weatherCategory);
     $('.current-weather').removeClass("hidden");
     $('.forecast').removeClass("hidden");
+}
+
+function generateFiveDayForecastHTML(response) {
+    response.list.forEach(function(weatherData) {
+        console.log(console.log(weatherData));
+    });
 }
 
 function getCustomMessage(weather) {

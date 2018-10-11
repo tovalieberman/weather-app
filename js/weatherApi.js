@@ -4,24 +4,22 @@ class WeatherApi {
     constructor(success, failure) {
         this.units = "imperial"; //switch to metric for celsius
         this.apiKey = "5a37ff291870ef42192074fc8420c55a";
-        this.successCallback = success;
-        this.failureCallback = failure;
     }
     
-    currentWeatherByCity(city) {
-        this.callAPI("weather", city);
+    currentWeatherByCity(city, successCallback, failureCallback) {
+        this.callAPI("weather", city, successCallback, failureCallback);
     }
 
-    fiveDayForecastByCity(city) {
-        this.callAPI("forecast", city);
+    fiveDayForecastByCity(city, successCallback, failureCallback) {
+        this.callAPI("forecast", city, successCallback, failureCallback);
     }
 
-    callAPI(action, query) {
+    callAPI(action, query, successCallback, failureCallback) {
         $.ajax({
             Category: "GET",
             url: `https://api.openweathermap.org/data/2.5/${action}?q=${query}&appid=${this.apiKey}&units=${this.units}`,
-            success: this.successCallback,
-            error: this.failureCallback,
+            success: successCallback,
+            error: failureCallback,
         });
     }
 }
