@@ -79,7 +79,14 @@ function getDateString(utcTime) {
     let days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];    
     day = days[date.getDay()];
     let time = date.toLocaleTimeString();
-    let dateString = `${time}<br>${day}`;
+    //Manipulate time string to remove the seconds
+    let pos = time.lastIndexOf(":");
+    let hoursAndMin = time.substr(0, pos);
+    let secondsAndAmPm = time.substr(pos + 1);
+    let amPM = secondsAndAmPm.substr(secondsAndAmPm.indexOf(" "));
+    let joinedTime = hoursAndMin.concat(amPM);
+    //Construct date string
+    let dateString = `${joinedTime}<br>${day}`;
     return dateString;
 }
 
