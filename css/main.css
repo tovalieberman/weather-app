@@ -121,12 +121,14 @@ div[class^="flex-container"] .heading-cell {
 /* Responsive design: medium/large viewport */
 @media only screen and (min-width: 768px) {
     div[class^="flex-container"] {
-        max-width: 88%;
+        max-width: 878px;
     }
     div[class^="flex-container"] .cell {
         width: 10%;
+        height: 35px;
     }
     div[class^="flex-container"] .heading-cell {
+        line-height: 35px;
         order: 0;
     }
     div[class^="flex-container"] .value-cell {
@@ -138,5 +140,10 @@ div[class^="flex-container"] .heading-cell {
     }
     div.flex-container-1 .heading-cell {
         display: block;
+    }
+    /* Add padding to mock vertical centering for all cells except time (which takes up 2 lines) */
+    div[class^="flex-container"] .value-cell:not(.time) {
+        padding-bottom: 2px;
+        padding-top: 18px;
     }
 }

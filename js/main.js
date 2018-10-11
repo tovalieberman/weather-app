@@ -55,7 +55,7 @@ function displayFiveDayForecast(response) {
     for(let i = 0; i < list.length; i++) {
         flexbox = $('<div>').addClass("flex-container-" + (i + 1));
         flexbox.append($('<div>').addClass("cell heading-cell").html("Time"));
-        flexbox.append($('<div>').addClass("cell value-cell").html(list[i].dt));
+        flexbox.append($('<div>').addClass("cell value-cell time").html(getDateString(list[i].dt)));
         flexbox.append($('<div>').addClass("cell heading-cell").html("Icon"));
         flexbox.append($('<div>').addClass("cell value-cell").html(list[i].weather[0].icon));
         flexbox.append($('<div>').addClass("cell heading-cell").html("Description"));
@@ -72,8 +72,19 @@ function displayFiveDayForecast(response) {
     }
 }
 
+function getDateString(utcTime) {
+    utcTime += "000";
+    utcTime = parseInt(utcTime);
+    let date = new Date(utcTime);
+    let days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];    
+    day = days[date.getDay()];
+    let time = date.toLocaleTimeString();
+    let dateString = `${time}<br>${day}`;
+    return dateString;
+}
+
 function handleError(error) {
-    console.log("error code " + error.message);
+    console.log("error: " + error.message);
     $('.location').html("Location not found, please try again.");
     $('.weather').addClass("hidden");
     $('.current-weather').addClass("hidden");
