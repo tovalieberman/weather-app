@@ -98,24 +98,45 @@ input#submit {
 .hidden {
     display: none;
 }
-/* Forecast table */
-.forecast table {
+/* Forecast table: Created using flexbox for mobile-first responsive design */
+div[class^="flex-container"] {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
     margin: 0 auto;
-    border-spacing: 0;
-    background-color: #638ebe7a;
 }
-.forecast table td.heading-cell {
-    background-color: #75757b96;
-}
-.forecast table td {
+div[class^="flex-container"] .cell {
     padding: 10px;
     border: 1px solid #ffffff36;
-    border-spacing: 0;
+    border-radius: 3px;
+    background-color: #638ebe7a;
+    width: 35%;
 }
-.forecast table tr:last-child td:first-child {
-    border-bottom-left-radius: 10px;
+div[class^="flex-container"] .heading-cell {
+    background-color: #75757b96;
 }
 
-.forecast table tr:last-child td:last-child {
-    border-bottom-right-radius: 10px;
+/* Responsive design: medium/large viewport */
+@media only screen and (min-width: 768px) {
+    div[class^="flex-container"] {
+        max-width: 75%;
+    }
+    div[class^="flex-container"] .cell {
+        width: 10%;
+    }
+    div[class^="flex-container"] .heading-cell {
+        order: 0;
+    }
+    div[class^="flex-container"] .value-cell {
+        order: 1;
+    }
+    /* Hide headings on all but first flex-box */
+    div[class^="flex-container"] .heading-cell {
+        display: none;
+    }
+    div.flex-container-1 .heading-cell {
+        display: block;
+    }
 }
