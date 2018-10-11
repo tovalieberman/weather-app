@@ -57,7 +57,7 @@ function displayFiveDayForecast(response) {
         flexbox.append($('<div>').addClass("cell heading-cell").html("Time"));
         flexbox.append($('<div>').addClass("cell value-cell time").html(getDateString(list[i].dt)));
         flexbox.append($('<div>').addClass("cell heading-cell").html("Icon"));
-        flexbox.append($('<div>').addClass("cell value-cell").html(list[i].weather[0].icon));
+        flexbox.append($('<div>').addClass("cell value-cell icon").html(getImage(list[i].weather[0].icon)));
         flexbox.append($('<div>').addClass("cell heading-cell").html("Description"));
         flexbox.append($('<div>').addClass("cell value-cell").html(list[i].weather[0].main));
         flexbox.append($('<div>').addClass("cell heading-cell").html("Temperature"));
@@ -81,6 +81,10 @@ function getDateString(utcTime) {
     let time = date.toLocaleTimeString();
     let dateString = `${time}<br>${day}`;
     return dateString;
+}
+
+function getImage(code) {
+    return $('<img>').attr('src', `https://openweathermap.org/img/w/${code}.png`);
 }
 
 function handleError(error) {
