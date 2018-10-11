@@ -15,10 +15,10 @@ async function getCurrentWeatherData(city) {
     try {
         let weatherData = await weatherApi.currentWeatherByCity(city);
         console.log(weatherData);
-        currentWeatherSuccessCallback(weatherData);    
+        displayCurrentWeather(weatherData);    
     }
     catch(error) {
-        failureCallback(error);
+        handleError(error);
     }
 }
 
@@ -26,26 +26,36 @@ async function getWeatherForecastData(city) {
     try {
         let forecastData = await weatherApi.fiveDayForecastByCity(city);
         console.log(forecastData);
-        forecastSuccessCallback(forecastData);    
+        displayFiveDayForecast(forecastData);    
     }
     catch(error) {
-        failureCallback(error);
+        handleError(error);
     }
 }
 
-function currentWeatherSuccessCallback(response) {
+function displayCurrentWeather(response) {
     $('.current-weather').removeClass("hidden");
-    displayOutput(response);
-    let weatherStatus = getWeatherStatus(response);
-    updateBackgroundImage(weatherStatus);
+    
+    $('.location').html(response.name);
+    $('.weather').html(response.weather[0].main);
+
+    let weatherCategory = getWeatherCategory(response);
+    updateBackgroundImage(weatherCategory);
+
+    $('#temp-value').html(Math.round(response.main.temp) + "&#176;");
+    $('#humidity-value').html(response.main.humidity);
+    $('#pressure-value').html(response.main.pressure);
+    $('#wind-speed-value').html(Math.round(response.wind.speed));
 }
 
-function forecastSuccessCallback(response) {
+function displayFiveDayForecast(response) {
     $('.forecast').removeClass("hidden");
-    generateFiveDayForecastHTML(response);
+    response.list.forEach(function(weatherData) {
+        console.log(console.log(weatherData));
+    });
 }
 
-function failureCallback(error) {
+function handleError(error) {
     console.log("error code " + error.message);
     $('.location').html("Location not found, please try again.");
     $('.weather').addClass("hidden");
@@ -53,18 +63,7 @@ function failureCallback(error) {
     $('.forecast').addClass("hidden");
 }
 
-function displayOutput(resp) {
-    console.log(resp);
-    $('.location').html(resp.name);
-    $('.weather').html(resp.weather[0].main);
-
-    $('#temp-value').html(Math.round(resp.main.temp) + "&#176;");
-    $('#humidity-value').html(resp.main.humidity);
-    $('#pressure-value').html(resp.main.pressure);
-    $('#wind-speed-value').html(Math.round(resp.wind.speed));
-}
-
-function getWeatherStatus(response) {
+function getWeatherCategory(response) {
     let statusCode = response.weather[0].id + ""; //cast to string
     console.log(statusCode);
     updateBackgroundImage(statusCode);
@@ -113,15 +112,9 @@ function updateBackgroundImage(weatherCategory) {
     $('#weather-background').addClass(weatherCategory);
 }
 
-function generateFiveDayForecastHTML(response) {
-    response.list.forEach(function(weatherData) {
-        console.log(console.log(weatherData));
-    });
-}
-
-function getCustomMessage(weather) {
+function getCustomMessage(weatherCategory) {
     let message = "";
-    switch (weather) {
+    switch (weatherCategory) {
         case "sunny":
             message = "Wherever you go, no matter what the weather, always bring your own sunshine.";
             break;
