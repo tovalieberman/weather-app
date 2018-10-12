@@ -59,6 +59,7 @@ function displayCurrentWeather(response) {
 
     let weatherCategory = getWeatherCategory(response);
     updateBackgroundImage(weatherCategory);
+    displayCustomMessage(weatherCategory);
 
     $('#temp-value').html(Math.round(response.main.temp) + "&#176;");
     $('#humidity-value').html(response.main.humidity);
@@ -98,4 +99,13 @@ function handleError(error, functionName) {
     $('.weather').addClass("hidden");
     $('.current-weather').addClass("hidden");
     $('.forecast').addClass("hidden");
+}
+
+function displayCustomMessage(weatherCategory) {
+    console.log("displayCustomMessage: ", weatherCategory);
+    let message = getCustomMessage(weatherCategory);
+    //There is a possibility that there's no quote for this type of weather, if so we don't want to display an empty div
+    if (message) {
+        $('.custom-message').html(message);
+    }
 }

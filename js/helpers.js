@@ -56,7 +56,7 @@ function getWeatherCategory(response) {
             weatherCategory = "clear"; //TODO: sunny category?
             break;
         default:
-            weatherCategory = "unkown";
+            weatherCategory = "unknown";
             break;
     }
 
@@ -86,20 +86,26 @@ function formatDescription(string) {
 function getCustomMessage(weatherCategory) {
     let message = "";
     switch (weatherCategory) {
-        case "sunny":
-            message = "Wherever you go, no matter what the weather, always bring your own sunshine.";
+        case "stormy":
+            message = "If you want to see the sunshine, you have to weather the storm.";
+            break;
+        case "cloudy":
+            message = "A cloudy day is no match for a sunny disposition.";
             break;
         case "rainy":
             message = "When life gives you a rainy day, play in the puddles.";
             break;
-        case "cloudy":
-            message = "But a cloudy day is no match for a sunny disposition.";
+        case "snowy":
+            message = "Kindness is like snow - it beautifies everything it covers.";
             break;
-        case "stormy":
-            message = "If you want to see the sunshine, you have to weather the storm.";
+        case "foggy":
+            message = "Truth is the torch that gleams through the fog without dispelling it.";
+            break;
+        case "clear":
+            message = "Wherever you go, no matter what the weather, always bring your own sunshine.";
             break;
         default:
-            message = "Unknown weather status";
+            message = "";
             break;
     }
     return message;
