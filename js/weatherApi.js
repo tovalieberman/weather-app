@@ -6,35 +6,41 @@ class WeatherApi {
         this.apiKey = "5a37ff291870ef42192074fc8420c55a";
     }
     
-    async currentWeatherByCity(city) {
-        return this.callApiByCity("weather", city);
+    async currentWeather(input1, input2) {
+        console.log(input1, input2);
+        let queryParam = this.getQueryParam(input1, input2);
+        return this.callApi("weather", queryParam);
     }
 
-    async fiveDayForecastByCity(city) {
-        return this.callApiByCity("forecast", city);
+    async fiveDayForecast(input1, input2) {
+        let queryParam = this.getQueryParam(input1, input2);
+        return this.callApi("forecast", queryParam);
     }
-    
-    async currentWeatherByCoordinates(lat, long) {
-        return this.callApiByCoord("weather", lat, long);
+     
+    getQueryParam(param1, param2) {
+        let queryParam = '';
+        if (typeof param1 === "number" && typeof param2 === "number") {
+            let latitude = param1;
+            let longitude = param2;
+            queryParam = `lat=${latitude}&lon=${longitude}`;
+        }
+        else if (typeof param1 === "number") {
+            let zip = param1;
+            queryParam = `zip=${zip}`;
+        }
+        else {
+            let city = param1;
+            queryParam = `q=${city}`;
+        }
+        return queryParam;
     }
 
-    async fiveDayForecastByCoordinates(lat, long) {
-        return this.callApiByCoord("forecast", lat, long);
-    }
-    
-    async callApiByCity(action, query) {
-        let url = `https://api.openweathermap.org/data/2.5/${action}?q=${query}&appid=${this.apiKey}&units=${this.units}`;
+    async callApi(action, query) {
+        let url = `https://api.openweathermap.org/data/2.5/${action}?${query}&appid=${this.apiKey}&units=${this.units}`;
         
         let response = await fetch(url);
         let weatherData = await response.json();
-        return weatherData;
-    }
-
-    async callApiByCoord(action, lat, long) {
-        let url = `https://api.openweathermap.org/data/2.5/${action}?lat=${lat}&lon=${long}&appid=${this.apiKey}&units=${this.units}`;
-        
-        let response = await fetch(url);
-        let weatherData = await response.json();
+        console.log(weatherData);
         return weatherData;
     }
 }

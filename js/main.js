@@ -1,15 +1,12 @@
 let weatherApi = new WeatherApi();
-let x = $('.location');
 
 $('#form').on('submit', function () {
     console.log('clicked submit');
     let input = $("#location").val();
     //Only call the API if location was given
     if (input) {
-        let weatherData = getCurrentWeatherData(input);
-        displayCurrentWeather(weatherData);
-        let forecastData = getWeatherForecastData(input);
-        displayFiveDayForecast(forecastData);
+        fetchAndDisplayCurrentWeatherData(input);
+        fetchAndDisplayWeatherForecastData(input);
     }
     return false;
 });
@@ -17,73 +14,49 @@ $('#form').on('submit', function () {
 $("#use-location").on('click tap', function() {
     //Takes a while to fetch geolocation, show loading message in meantime
     if (navigator.geolocation) {
-        x.html("Loading...");
+        $('.location').html("Loading...");
         //if successful call getWeatherData, if error call permissionDenied
-        navigator.geolocation.getCurrentPosition(getWeatherData, permissionDenied);
+        navigator.geolocation.getCurrentPosition(getWeatherDataByCoordinates, permissionDenied);
     } else {
-        x.html("Geolocation is not supported by this browser.");
+        $('.location').html("Geolocation is not supported by this browser.");
     }
 });
 
-function getWeatherData(position) {
-    x.html("Latitude: " + position.coords.latitude + 
-    "<br>Longitude: " + position.coords.longitude); 
+function getWeatherDataByCoordinates(position) {
+    console.log("Latitude: " + position.coords.latitude + "Longitude: " + position.coords.longitude); 
 
-    getCurrentWeatherDataByCoordinates(position.coords.latitude, position.coords.longitude);
-    getWeatherForecastDataByCoordinates(position.coords.latitude, position.coords.longitude);
+    fetchAndDisplayCurrentWeatherData(position.coords.latitude, position.coords.longitude);
+    fetchAndDisplayWeatherForecastData(position.coords.latitude, position.coords.longitude);
 }
 
 function permissionDenied(error) {
     if (error.code === 1) {
-        x.html("Permission denied by browser, please try again or type a city in the box.");
+        $('.location').html("Permission denied by browser, please try again or type a location in the box.");
     }
     else {
-        x.html("Something went wrong, please try again or type a city in the box.");
+        $('.location').html("Something went wrong, please try again or type a location in the box.");
     }
 }
 
-async function getCurrentWeatherData(city) {
+async function fetchAndDisplayCurrentWeatherData(input1, input2) {
     try {
-        let weatherData = await weatherApi.currentWeatherByCity(city);
-        console.log(weatherData);
-        return weatherData;
-    }
-    catch(error) {
-        handleError(error);
-    }
-}
-
-async function getWeatherForecastData(city) {
-    try {
-        let forecastData = await weatherApi.fiveDayForecastByCity(city);
-        console.log(forecastData);
-        return forecastData;
-    }
-    catch(error) {
-        handleError(error);
-    }
-}
-
-async function getCurrentWeatherDataByCoordinates(lat, long) {
-    try {
-        console.log(lat,long);
-        let weatherData = await weatherApi.currentWeatherByCoordinates(lat, long);
+        let weatherData = await weatherApi.currentWeather(input1, input2);
         console.log(weatherData);
         displayCurrentWeather(weatherData);    
     }
     catch(error) {
-        handleError(error);
+        handleError(error, "fetchAndDisplayCurrentWeatherData");
     }
 }
 
-async function getWeatherForecastDataByCoordinates(lat, long) {
+async function fetchAndDisplayWeatherForecastData(input1, input2) {
     try {
-        let forecastData = await weatherApi.fiveDayForecastByCoordinates(lat, long);
+        let forecastData = await weatherApi.fiveDayForecast(input1, input2);
         console.log(forecastData);
-        displayFiveDayForecast(forecastData);    
+        displayFiveDayForecast(forecastData);
     }
     catch(error) {
-        handleError(error);
+        handleError(error, "fetchAndDisplayWeatherForecastData");
     }
 }
 
@@ -150,8 +123,8 @@ function getImage(code) {
     return $('<img>').attr('src', `https://openweathermap.org/img/w/${code}.png`);
 }
 
-function handleError(error) {
-    console.log("error: " + error.message);
+function handleError(error, functionName) {
+    console.log("error in " + functionName + ": " + error.message);
     $('.location').html("Location not found, please try again.");
     $('.weather').addClass("hidden");
     $('.current-weather').addClass("hidden");
