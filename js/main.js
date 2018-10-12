@@ -173,10 +173,14 @@ function displayFiveDayForecast(response) {
         flexbox = $('<div>').addClass("flex-container-" + (i + 1));
         flexbox.append($('<div>').addClass("cell heading-cell").html("Time"));
         flexbox.append($('<div>').addClass("cell value-cell time").html(getDateString(list[i].dt)));
-        flexbox.append($('<div>').addClass("cell heading-cell").html("Icon"));
-        flexbox.append($('<div>').addClass("cell value-cell icon").html(getImage(list[i].weather[0].icon)));
-        flexbox.append($('<div>').addClass("cell heading-cell").html("Description"));
-        flexbox.append($('<div>').addClass("cell value-cell").html(formatDescription(list[i].weather[0].description)));
+        // flexbox.append($('<div>').addClass("cell value-cell icon").html(getImage(list[i].weather[0].icon)));
+        flexbox.append($('<div>').addClass("cell heading-cell description-heading").html("Description"));
+        let description = $('<span>').addClass('description').html(formatDescription(list[i].weather[0].description));
+        let image = getImage(list[i].weather[0].icon);
+        // let descriptionCell = $('<div>').addClass("cell value-cell description").html(image);
+        // descriptionCell.prepend(description);
+        // flexbox.append(descriptionCell);
+        flexbox.append($('<div>').addClass("cell value-cell description-cell").html(image).prepend(description));
         flexbox.append($('<div>').addClass("cell heading-cell").html("Temperature"));
         flexbox.append($('<div>').addClass("cell value-cell").html($('<span>').append($('<span>').addClass('temp-value').html(Math.round(list[i].main.temp))).append($('<span>').addClass('degree-symbol').html("&#176;"))));
         flexbox.append($('<div>').addClass("cell heading-cell").html("Humidity"));

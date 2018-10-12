@@ -158,14 +158,14 @@ div[class^="flex-container"] .heading-cell {
     line-height: 35px;
 }
 /* Add padding to mock vertical centering for all cells except time (which takes up 2 lines) */
-div[class^="flex-container"] .value-cell:not(.time) {
+div[class^="flex-container"] .value-cell:not(.time):not(.description-cell) {
     padding-bottom: 2px;
     padding-top: 18px;
 }
 /* Styling for weather icons */
-div[class^="flex-container"] .value-cell.icon {
-    padding-top: 5px;
-    padding-bottom: 15px;
+div[class^="flex-container"] .value-cell.description-cell .description {
+    vertical-align: top;
+    line-height: 2;
 }
 .degree-symbol {
     margin-left: 1px;
@@ -176,7 +176,7 @@ div[class^="flex-container"] .value-cell.icon {
         max-width: 878px;
     }
     div[class^="flex-container"] .cell {
-        width: 10%;
+        width: 12%;
     }
     div[class^="flex-container"] .heading-cell {
         order: 0;
@@ -191,5 +191,13 @@ div[class^="flex-container"] .value-cell.icon {
     div.flex-container-1 .heading-cell {
         display: block;
     }
+    div[class^="flex-container"] .value-cell.description-cell {
+        white-space: nowrap;
+        width: 200px;
+    }
+    div[class^="flex-container"] .heading-cell.description-heading {
+        width: 200px;
+    }
+
     
 }
