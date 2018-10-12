@@ -1,4 +1,5 @@
 let weatherApi = new WeatherApi();
+let x = $('.location');
 
 $('#form').on('submit', function () {
     console.log('clicked submit');
@@ -11,11 +12,33 @@ $('#form').on('submit', function () {
     return false;
 });
 
+$("#use-location").on('click tap', function() {
+    //Takes a while to fetch geolocation, show loading message in meantime
+    if (navigator.geolocation) {
+        x.html("Loading...");
+        navigator.geolocation.getCurrentPosition(showPosition, permissionDenied);
+    } else {
+        x.html("Geolocation is not supported by this browser.");
+    }
+});
+
+function showPosition(position) {
+    x.html("Latitude: " + position.coords.latitude + 
+    "<br>Longitude: " + position.coords.longitude); 
+
+    getCurrentWeatherDataByCoordinates(Math.round(position.coords.latitude), Math.round(position.coords.longitude));
+    getWeatherForecastDataByCoordinates(Math.round(position.coords.latitude), Math.round(position.coords.longitude));
+}
+
+function permissionDenied() {
+    x.html("Permission denied by browser, please try again or type a city in the box.");
+}
+
 async function getCurrentWeatherData(city) {
     try {
         let weatherData = await weatherApi.currentWeatherByCity(city);
         console.log(weatherData);
-        displayCurrentWeather(weatherData);    
+        displayCurrentWeather(weatherData);
     }
     catch(error) {
         handleError(error);
@@ -25,6 +48,28 @@ async function getCurrentWeatherData(city) {
 async function getWeatherForecastData(city) {
     try {
         let forecastData = await weatherApi.fiveDayForecastByCity(city);
+        console.log(forecastData);
+        displayFiveDayForecast(forecastData);    
+    }
+    catch(error) {
+        handleError(error);
+    }
+}
+
+async function getCurrentWeatherDataByCoordinates(lat, long) {
+    try {
+        let weatherData = await weatherApi.currentWeatherByCoordinates(lat, long);
+        console.log(weatherData);
+        displayCurrentWeather(weatherData);    
+    }
+    catch(error) {
+        handleError(error);
+    }
+}
+
+async function getWeatherForecastDataByCoordinates(lat, long) {
+    try {
+        let forecastData = await weatherApi.fiveDayForecastByCoordinates(lat, long);
         console.log(forecastData);
         displayFiveDayForecast(forecastData);    
     }
