@@ -34,18 +34,86 @@ $("#convert-button").on('click tap', function() {
     if (weatherApi.units === "imperial") {
         weatherApi.units = "metric";
         $("#convert-button").html("Switch to Farenheit");
+        updateUnits("metric");
     }
     //Switch to Farenheit and update button text
     else {
         weatherApi.units = "imperial";
         $("#convert-button").html("Switch to Celsius");
+        updateUnits("imperial");
     }
     //Call API again, using the city ID rather than the input to capture the most 
     //accurate location, even if the user searched using current location
     let cityID = $('.exact-location').html();
-    fetchAndDisplayCurrentWeatherData(cityID);
-    fetchAndDisplayWeatherForecastData(cityID);
 });
+
+function updateUnits(newUnits) {
+    //Current temp at top of page
+    let currentTemp = $('.temperature #temp-value').html();
+    let convertedTemp = convertTemp(currentTemp, newUnits);
+    $('.temperature #temp-value').html(convertedTemp);
+
+    //Current wind speed at top of page
+    let currentSpeed = $('#wind-speed-value').html();
+    let convertedSpeed = convertSpeed(currentSpeed, newUnits);
+    $('#wind-speed-value').html(convertedSpeed);
+
+    //Forecast temp values
+    $('.temp-value').each(function(index, value) {
+        console.log(value);
+        let currentTempValue = $(value).html(); 
+        console.log(currentTempValue);
+        let newTempValue = convertTemp(currentTempValue, newUnits);
+        // console.log(newTempValue);
+        // value.html('test');
+        $(value).html(newTempValue);
+    });
+
+    //Update wind speed values
+    $('.wind-speed-value').each(function(index, value) {
+        console.log(value);
+        let currentSpeedValue = $(value).html(); 
+        console.log(currentSpeedValue);
+        let newSpeedValue = convertSpeed(currentSpeedValue, newUnits);
+        // console.log(newTempValue);
+        // value.html('test');
+        $(value).html(newSpeedValue);
+    });
+
+    //Update wind speed units - mph vs m/s
+    $('#current-wind-speed-units').html(getWindSpeedUnits());
+    $('.wind-speed-units').html(getWindSpeedUnits());
+}
+
+function convertTemp(currentTemp, newUnits) {
+    console.log("convert " + currentTemp + " to " + newUnits + " temp");
+    let convertedTemp;
+    currentTemp = parseInt(currentTemp);
+    if (newUnits === "imperial") {
+        convertedTemp = Math.round(currentTemp * 9 / 5 + 32);
+    }
+    else {
+        convertedTemp = Math.round((currentTemp - 32) * 5 / 9);
+    }
+    console.log(convertedTemp);
+    return convertedTemp;
+}
+
+function convertSpeed(currentSpeed, newUnits) {
+    console.log("convert " + currentSpeed + " to " + newUnits + " speed");
+    let convertedSpeed;
+    currentSpeed = parseInt(currentSpeed);
+    //m/s to mph: multiply the speed value by 2.237
+    if (newUnits === "imperial") {
+        convertedSpeed = Math.round((currentSpeed * 2.237));
+    }
+    //mph to m/s: divide the speed value by 2.237
+    else {        
+        convertedSpeed = Math.round(currentSpeed / 2.237);
+    }
+    console.log(convertedSpeed);
+    return convertedSpeed;
+}
 
 function getWeatherDataByCoordinates(position) {
     console.log("Latitude: " + position.coords.latitude + "Longitude: " + position.coords.longitude); 
@@ -89,10 +157,11 @@ function displayCurrentWeather(response) {
     updateBackgroundImage(weatherCategory);
     displayCustomMessage(weatherCategory);
 
-    $('#temp-value').html(Math.round(response.main.temp) + "&#176;");
+    $('#temp-value').html(Math.round(response.main.temp)); //degree symbol added in HTML
     $('#humidity-value').html(response.main.humidity + "%");
     $('#pressure-value').html(response.main.pressure + " psa");
-    $('#wind-speed-value').html(Math.round(response.wind.speed) + " " + getWindSpeedUnits());
+    $('#wind-speed-value').html(Math.round(response.wind.speed));
+    $('#current-wind-speed-units').html(getWindSpeedUnits());
 }
 
 function displayFiveDayForecast(response) {
@@ -109,13 +178,13 @@ function displayFiveDayForecast(response) {
         flexbox.append($('<div>').addClass("cell heading-cell").html("Description"));
         flexbox.append($('<div>').addClass("cell value-cell").html(formatDescription(list[i].weather[0].description)));
         flexbox.append($('<div>').addClass("cell heading-cell").html("Temperature"));
-        flexbox.append($('<div>').addClass("cell value-cell").html(Math.round(list[i].main.temp) + "&#176;"));
+        flexbox.append($('<div>').addClass("cell value-cell").html($('<span>').append($('<span>').addClass('temp-value').html(Math.round(list[i].main.temp))).append($('<span>').addClass('degree-symbol').html("&#176;"))));
         flexbox.append($('<div>').addClass("cell heading-cell").html("Humidity"));
         flexbox.append($('<div>').addClass("cell value-cell").html(list[i].main.humidity + "%"));
         flexbox.append($('<div>').addClass("cell heading-cell").html("Air Pressure"));
         flexbox.append($('<div>').addClass("cell value-cell").html(Math.round(list[i].main.pressure) + " psa"));
         flexbox.append($('<div>').addClass("cell heading-cell").html("Wind"));
-        flexbox.append($('<div>').addClass("cell value-cell").html(Math.round(list[i].wind.speed) + " "  + getWindSpeedUnits()));
+        flexbox.append($('<div>').addClass("cell value-cell").html($('<span>').append($('<span>').addClass('wind-speed-value').html(Math.round(list[i].wind.speed))).append($('<span>').addClass('wind-speed-units').html(getWindSpeedUnits()))));
         flexboxesWrapper.append(flexbox);
     }
     $('.forecast-flexbox').html(flexboxesWrapper); //Use html() instead of append() so we don't end up with multiple tables

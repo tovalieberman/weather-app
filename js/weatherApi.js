@@ -2,7 +2,7 @@
 class WeatherApi {
 
     constructor(success, failure) {
-        this.units = "imperial"; //switch to metric for celsius
+        this.units = "imperial"; //just to store the value we're currently using, API call is hardcoded to use Farenheit
         this.apiKey = "5a37ff291870ef42192074fc8420c55a";
     }
     
@@ -44,7 +44,7 @@ class WeatherApi {
     }
 
     async callApi(action, query) {
-        let url = `https://api.openweathermap.org/data/2.5/${action}?${query}&appid=${this.apiKey}&units=${this.units}`;
+        let url = `https://api.openweathermap.org/data/2.5/${action}?${query}&appid=${this.apiKey}&units=imperial`;
         
         let response = await fetch(url);
         let weatherData = await response.json();
