@@ -19,12 +19,14 @@ class WeatherApi {
      
     getQueryParam(param1, param2) {
         let queryParam = '';
+        //if 2 numeric values are passed, it's coordinates
         if (typeof param1 === "number" && typeof param2 === "number") {
             let latitude = param1;
             let longitude = param2;
             queryParam = `lat=${latitude}&lon=${longitude}`;
         }
-        else if (typeof param1 === "number") {
+        //if the input can be parsed into an int, assume it's a zip code
+        else if (parseInt(param1)) {
             let zip = param1;
             queryParam = `zip=${zip}`;
         }
