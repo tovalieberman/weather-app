@@ -118,22 +118,32 @@ div[class^="flex-container"] .cell {
     border-radius: 3px;
     background-color: #638ebe7a;
     width: 35%;
+    height: 35px;
 }
 div[class^="flex-container"] .heading-cell {
     background-color: #75757b96;
+    line-height: 35px;
+}
+/* Add padding to mock vertical centering for all cells except time (which takes up 2 lines) */
+div[class^="flex-container"] .value-cell:not(.time) {
+    padding-bottom: 2px;
+    padding-top: 18px;
+}
+/* Styling for weather icons */
+div[class^="flex-container"] .value-cell.icon {
+    padding-top: 5px;
+    padding-bottom: 15px;
 }
 
 /* Responsive design: medium/large viewport */
-@media only screen and (min-width: 768px) {
+@media only screen and (min-width: 888px) {
     div[class^="flex-container"] {
         max-width: 878px;
     }
     div[class^="flex-container"] .cell {
         width: 10%;
-        height: 35px;
     }
     div[class^="flex-container"] .heading-cell {
-        line-height: 35px;
         order: 0;
     }
     div[class^="flex-container"] .value-cell {
@@ -146,14 +156,5 @@ div[class^="flex-container"] .heading-cell {
     div.flex-container-1 .heading-cell {
         display: block;
     }
-    /* Add padding to mock vertical centering for all cells except time (which takes up 2 lines) */
-    div[class^="flex-container"] .value-cell:not(.time) {
-        padding-bottom: 2px;
-        padding-top: 18px;
-    }
-    /* Styling for weather icons */
-    div[class^="flex-container"] .value-cell.icon {
-        padding-top: 5px;
-        padding-bottom: 15px;
-    }
+    
 }
