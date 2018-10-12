@@ -75,6 +75,15 @@ input#location {
     border: 2px solid #ffffffc9;
     cursor: pointer;
 }
+/* Convert to celsius button*/
+.convert {
+    margin: 15px;
+}
+.small-button#switch-to-celsius {
+    font-size: 14px;
+    margin-bottom: 0;
+    padding: 10px;
+}
 /* Current weather table */
 .current-weather table {
     margin: 0 auto;
