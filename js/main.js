@@ -64,7 +64,7 @@ function displayCurrentWeather(response) {
     $('.current-weather').removeClass("hidden");
     
     $('.location').html(response.name);
-    $('.weather').html(response.weather[0].main);
+    $('.weather').html(formatDescription(response.weather[0].description));
 
     let weatherCategory = getWeatherCategory(response);
     updateBackgroundImage(weatherCategory);
@@ -87,7 +87,7 @@ function displayFiveDayForecast(response) {
         flexbox.append($('<div>').addClass("cell heading-cell").html("Icon"));
         flexbox.append($('<div>').addClass("cell value-cell icon").html(getImage(list[i].weather[0].icon)));
         flexbox.append($('<div>').addClass("cell heading-cell").html("Description"));
-        flexbox.append($('<div>').addClass("cell value-cell").html(list[i].weather[0].main));
+        flexbox.append($('<div>').addClass("cell value-cell").html(formatDescription(list[i].weather[0].description)));
         flexbox.append($('<div>').addClass("cell heading-cell").html("Temperature"));
         flexbox.append($('<div>').addClass("cell value-cell").html(Math.round(list[i].main.temp) + "&#176;"));
         flexbox.append($('<div>').addClass("cell heading-cell").html("Humidity"));
@@ -178,6 +178,11 @@ function getWeatherCategory(response) {
 function updateBackgroundImage(weatherCategory) {
     $('#weather-background').removeClass();
     $('#weather-background').addClass(weatherCategory);
+}
+
+function formatDescription(string) {
+    //capitalize first letter
+    return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
 function getCustomMessage(weatherCategory) {
