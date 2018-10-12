@@ -8,6 +8,12 @@ $('#form').on('submit', function () {
         fetchAndDisplayCurrentWeatherData(input);
         fetchAndDisplayWeatherForecastData(input);
     }
+    //Or if they already chose to use their location, it should be saved in the hidden field
+    else if ($("#location").attr('placeholder') === "Current location") {
+        let cityID = $('.exact-location').html();
+        fetchAndDisplayCurrentWeatherData(cityID);
+        fetchAndDisplayWeatherForecastData(cityID);
+    }
     return false;
 });
 
@@ -15,6 +21,7 @@ $("#use-location").on('click tap', function() {
     //Takes a while to fetch geolocation, show loading message in meantime
     if (navigator.geolocation) {
         $('.location').html("Loading...");
+        $('#location').attr('placeholder', "Current location");
         //if successful call getWeatherData, if error call permissionDenied
         navigator.geolocation.getCurrentPosition(getWeatherDataByCoordinates, permissionDenied);
     } else {
