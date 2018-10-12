@@ -25,10 +25,16 @@ class WeatherApi {
             let longitude = param2;
             queryParam = `lat=${latitude}&lon=${longitude}`;
         }
-        //if the input can be parsed into an int, assume it's a zip code
+        //if the input can be parsed into an int, could either be a zip code or a city ID, depending on num digits
         else if (parseInt(param1)) {
-            let zip = param1;
-            queryParam = `zip=${zip}`;
+            if (param1.length > 5) {
+                let id = param1;
+                queryParam = `id=${id}`;
+            }
+            else {
+                let zip = param1;
+                queryParam = `zip=${zip}`;    
+            }
         }
         else {
             let city = param1;

@@ -33,10 +33,11 @@ $("#convert-button").on('click tap', function() {
         weatherApi.units = "imperial";
         $("#convert-button").html("Switch to Celsius");
     }
-    //Call API again, using the output location rather than the input to capture the latest 
-    //updated location, even if updated through using current location
-    fetchAndDisplayCurrentWeatherData($(".location").html());
-    fetchAndDisplayWeatherForecastData($(".location").html());
+    //Call API again, using the city ID rather than the input to capture the most 
+    //accurate location, even if the user searched using current location
+    let cityID = $('.exact-location').html();
+    fetchAndDisplayCurrentWeatherData(cityID);
+    fetchAndDisplayWeatherForecastData(cityID);
 });
 
 function getWeatherDataByCoordinates(position) {
@@ -73,6 +74,9 @@ function displayCurrentWeather(response) {
     
     $('.location').html(response.name);
     $('.weather').html(formatDescription(response.weather[0].description));
+    
+    //Update hidden field with city ID as returned from API so that we can call it again and get the same results
+    $('.exact-location').html(response.id);
 
     let weatherCategory = getWeatherCategory(response);
     updateBackgroundImage(weatherCategory);
