@@ -58,6 +58,12 @@ body {
     background-image: url(../img/foggy.png);
 }
 /* Input field and submit button */
+#form {
+    margin: 0 15px;
+}
+.form-fields { /* wrapper to prevent search button from breaking to the next line g*/
+    display: inline-block;
+}
 input#location {
     border-radius: 5px;
     padding: 10px;
