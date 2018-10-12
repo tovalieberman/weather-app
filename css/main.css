@@ -65,8 +65,7 @@ input#location {
     width: 250px;    
 }
 .button {
-    margin-left: 5px;
-    margin-right: 10px;
+    margin: 0 10px 15px 5px;
     padding: 10px;
     background-color: #75757b;
     font-size: 20px;
