@@ -79,7 +79,7 @@ input#location {
 .convert {
     margin: 15px;
 }
-.small-button#switch-to-celsius {
+.small-button#convert-button {
     font-size: 14px;
     margin-bottom: 0;
     padding: 10px;

@@ -22,6 +22,23 @@ $("#use-location").on('click tap', function() {
     }
 });
 
+$("#convert-button").on('click tap', function() {
+    //Switch to Celsius and update button text
+    if (weatherApi.units === "imperial") {
+        weatherApi.units = "metric";
+        $("#convert-button").html("Switch to Farenheit");
+    }
+    //Switch to Farenheit and update button text
+    else {
+        weatherApi.units = "imperial";
+        $("#convert-button").html("Switch to Celsius");
+    }
+    //Call API again, using the output location rather than the input to capture the latest 
+    //updated location, even if updated through using current location
+    fetchAndDisplayCurrentWeatherData($(".location").html());
+    fetchAndDisplayWeatherForecastData($(".location").html());
+});
+
 function getWeatherDataByCoordinates(position) {
     console.log("Latitude: " + position.coords.latitude + "Longitude: " + position.coords.longitude); 
 
@@ -62,9 +79,9 @@ function displayCurrentWeather(response) {
     displayCustomMessage(weatherCategory);
 
     $('#temp-value').html(Math.round(response.main.temp) + "&#176;");
-    $('#humidity-value').html(response.main.humidity);
-    $('#pressure-value').html(response.main.pressure);
-    $('#wind-speed-value').html(Math.round(response.wind.speed));
+    $('#humidity-value').html(response.main.humidity + "%");
+    $('#pressure-value').html(response.main.pressure + " psa");
+    $('#wind-speed-value').html(Math.round(response.wind.speed) + " " + getWindSpeedUnits());
 }
 
 function displayFiveDayForecast(response) {
@@ -87,7 +104,7 @@ function displayFiveDayForecast(response) {
         flexbox.append($('<div>').addClass("cell heading-cell").html("Air Pressure"));
         flexbox.append($('<div>').addClass("cell value-cell").html(Math.round(list[i].main.pressure) + " psa"));
         flexbox.append($('<div>').addClass("cell heading-cell").html("Wind"));
-        flexbox.append($('<div>').addClass("cell value-cell").html(Math.round(list[i].wind.speed) + " mph"));
+        flexbox.append($('<div>').addClass("cell value-cell").html(Math.round(list[i].wind.speed) + " "  + getWindSpeedUnits()));
         flexboxesWrapper.append(flexbox);
     }
     $('.forecast-flexbox').html(flexboxesWrapper); //Use html() instead of append() so we don't end up with multiple tables
@@ -108,4 +125,8 @@ function displayCustomMessage(weatherCategory) {
     if (message) {
         $('.custom-message').html(message);
     }
+}
+
+function getWindSpeedUnits() {
+    return (weatherApi.units === "imperial") ? "mph" : "m/s";
 }
