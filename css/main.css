@@ -59,6 +59,7 @@ body {
 }
 /* Input field and submit button */
 input#location {
+    border-radius: 5px;
     padding: 10px;
     color: #000;
     font-size: 20px;
@@ -110,7 +111,7 @@ input#location {
     border-radius: 20px;
     display: inline-block;
     padding: 10px;
-    margin-top: 15px;
+    margin: 15px 60px 0;
     font-size: 20px;
 }
 /* Hide weather data until after API call */
